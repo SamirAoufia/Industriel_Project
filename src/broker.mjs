@@ -1,7 +1,7 @@
 import mqtt from "mqtt";
 
-import { Prisma } from "@prisma/client";
-import { db } from "./server/db";
+// import { Prisma } from "@prisma/client";
+// import { db } from "./server/db";
 
 // const prisma = new Prisma()
 
@@ -17,18 +17,18 @@ client.on("connect", () => {
 })
 
 
-client.on("message", async (topicMQTT, value) => {
-    console.log(topicMQTT + "\t", value.toString());
+// client.on("message", async (topicMQTT, value) => {
+//     console.log(topicMQTT + "\t", value.toString());
 
-    const tag = await db.tag.upsert({
-        where: {
-            topic: topicMQTT
-        },
-        create: {
-            topic: topicMQTT
-            value: value.toString()
+//     const tag = await db.tag.upsert({
+//         where: {
+//             topic: topicMQTT
+//         },
+//         create: { 
+//             topic: topicMQTT
+//             value: value.toString()
 
-        }
-    })
+//         }
+//     })
 
-}
+// }

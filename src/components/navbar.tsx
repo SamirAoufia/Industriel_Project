@@ -103,10 +103,7 @@ export default function Simple() {
                                 />
                             </MenuButton>
                             <MenuList>
-                                <MenuItem>Link 1</MenuItem>
-                                <MenuItem>Link 2</MenuItem>
-                                <MenuDivider />
-                                <MenuItem>Link 3</MenuItem>
+                                <MenuItem>Login</MenuItem>
                             </MenuList>
                         </Menu>
                     </Flex>
