@@ -59,13 +59,6 @@ export default function BasicStatistics() {
         Voici les valeurs et le bouton
       </chakra.h1>
       <ClickMe/>
-      <br />
-      <SimpleGrid columns={{ base: 1, md: 3 }} spacing={{ base: 5, lg: 8 }}>
-      
-        <StatsCard title={'Users'} stat={'5,000'} icon={<BsPerson size={'3em'}  /> }   />
-        <StatsCard title={'Servers'} stat={'1,000'} icon={<FiServer size={'3em'} />} />
-        <StatsCard title={'Datacenters'} stat={'7'} icon={<GoLocation size={'3em'} />} />
-      </SimpleGrid>
     </Box>
   )
 }

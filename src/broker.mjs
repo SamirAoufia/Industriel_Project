@@ -1,34 +1,45 @@
 import mqtt from "mqtt";
 
-// import { Prisma } from "@prisma/client";
-// import { db } from "./server/db";
+import { PrismaClient } from "@prisma/client";
 
-// const prisma = new Prisma()
+
+const db = new PrismaClient();
 
 const client = mqtt.connect("mqtt://helhatechniquecharleroi.xyz", {
-    username: "groupe5",
-    password: "groupe5",
-    port: 1883
+    username: "groupe1",
+    password: "groupe1",
+    port: 1883,
 })
 
 client.on("connect", () => {
     console.log("connected");
-    client.subscribe("/groupe5/#");
+    client.subscribe("/groupe1/#");
 })
 
 
-// client.on("message", async (topicMQTT, value) => {
-//     console.log(topicMQTT + "\t", value.toString());
 
-//     const tag = await db.tag.upsert({
-//         where: {
-//             topic: topicMQTT
-//         },
-//         create: { 
-//             topic: topicMQTT
-//             value: value.toString()
+client.on("message",(topicMQTT, value) => {
+    topicMQTT = topicMQTT.replace("/groupe1/", "");
+    console.log(topicMQTT + "\t", value.toString());
 
-//         }
-//     })
+    db.tag.upsert({
 
-// }
+        where: {
+            topic: topicMQTT
+        },
+        create: {
+            topic: topicMQTT,
+            value: value.toString(),
+        },
+        update: {
+            value: value.toString(),
+            lastseen: new Date(),
+        }
+    }).then(() => {
+        console.log("done");
+        
+    }).catch((err) => {
+        console.error("Erreur", err)
+        
+    });
+});
