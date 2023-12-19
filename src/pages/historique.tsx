@@ -27,11 +27,11 @@ export default function Home() {
         return res.json();
       })
       .then(tagsData => {
-        console.log(tagsData);
+        //console.log(tagsData);
         setTags(tagsData);
       })
       .catch(err => {
-        console.log(err);
+        //console.log(err);
       });
   }
 

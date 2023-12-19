@@ -1,11 +1,84 @@
-import { Box, Switch, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Switch, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import mqtt, { MqttClient } from "mqtt";
 import { useEffect, useState } from "react";
 import SmallWithLogoLeft from "~/components/footer";
 import Simple from "~/components/navbar";
 import BasicStatistics from "~/components/val";
 
 
+
 export default function Home() {
+
+  const [mqttclient, setMqttclient] = useState<MqttClient | null>();
+
+  useEffect(() => {
+    let client2 = mqttclient
+
+    if(!mqttclient){
+    client2 = mqtt.connect('ws://helhatechniquecharleroi.xyz', {
+    username: "groupe1",
+    password: "groupe1",
+    port: 9001
+  })
+    setMqttclient(client2)
+  }
+
+  client2?.on("connect", () => {
+  console.log("connexion mqtt ok")
+  })})
+ 
+
+  
+  const [etatBoutonBlue, setEtatBoutonBlue] = useState(0);
+  
+  const handleClickBlue = () => {
+      // Inversez la valeur entre 0 et 1
+  const nouvelEtat = etatBoutonBlue === 0 ? 1 : 0;
+  
+      // Mettez à jour l'état du bouton
+  setEtatBoutonBlue(nouvelEtat);
+  
+      // Publiez la valeur mise à jour via mqttclient
+    mqttclient?.publish('/groupe1/evt/BlueTruck2', nouvelEtat.toString());
+  };
+  /////////////////////////////////////////////////////////////////////
+  const [etatBoutonGreen, setEtatBoutonGreen] = useState(0);
+  
+  const handleClickGreen = () => {
+      // Inversez la valeur entre 0 et 1
+  const nouvelEtat = etatBoutonGreen === 0 ? 1 : 0;
+  
+      // Mettez à jour l'état du bouton
+  setEtatBoutonGreen(nouvelEtat);
+  
+      // Publiez la valeur mise à jour via mqttclient
+    mqttclient?.publish('/groupe1/evt/GreenTruck2', nouvelEtat.toString());
+  };
+
+   /////////////////////////////////////////////////////////////////////
+   const [etatBoutonRed, setEtatBoutonRed] = useState(0);
+  
+   const handleClickRed = () => {
+       // Inversez la valeur entre 0 et 1
+   const nouvelEtat = etatBoutonRed === 0 ? 1 : 0;
+   
+       // Mettez à jour l'état du bouton
+   setEtatBoutonRed(nouvelEtat);
+   
+       // Publiez la valeur mise à jour via mqttclient
+     mqttclient?.publish('/groupe1/evt/RedTruck2', nouvelEtat.toString());
+   };
+
+   //////////////////////////////////////////////////////////////////////
+
+   const handleClickYellow = () => {
+    handleClickGreen();
+    handleClickRed();
+  };
+ 
+
+
+
   const [tags, setTags] = useState([]);
 
   useEffect(() => {
@@ -27,24 +100,36 @@ export default function Home() {
         return res.json();
       })
       .then(tagsData => {
-        console.log(tagsData);
+        //console.log(tagsData);
         setTags(tagsData);
       })
       .catch(err => {
-        console.log(err);
+        //console.log(err);
       });
   }
-  
+
   return (
-    <><Simple/>
+    <><Simple />
       <Box as="main" minH={"calc(100vh - 8rem)"} >
 
-    <BasicStatistics/>
-    <br />
-    <br />
-    <br />
-    <br />
-    <TableContainer>
+        <BasicStatistics />
+
+
+      
+
+        <Button onClick={handleClickBlue}>TEST bleu</Button>
+        <Button onClick={handleClickGreen}>TEST vert</Button>
+        <Button onClick={handleClickRed}>TEST rouge</Button>
+        <Button onClick={handleClickYellow}>TEST jaune</Button>
+
+
+
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <TableContainer>
           <Table variant='simple'>
 
             <Thead>
@@ -75,7 +160,7 @@ export default function Home() {
       </Box>
 
 
-      <SmallWithLogoLeft/>
+      <SmallWithLogoLeft />
     </>
   );
 }
