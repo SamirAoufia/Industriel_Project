@@ -18,6 +18,14 @@ const config = {
     locales: ["fr"],
     defaultLocale: "fr",
   },
+  images: {
+    remotePatterns:[{
+      protocol: 'https',
+      hostname: 'cdn.discordapp.com',
+      port:'',
+      pathname:'/avatars/**',
+    }]
+  },
 };
 
 export default config;

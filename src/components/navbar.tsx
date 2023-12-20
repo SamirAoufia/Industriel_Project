@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     Flex,
@@ -20,6 +20,8 @@ import {
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import { type Props } from 'next/script';
+import { signIn, signOut, useSession } from 'next-auth/react';
+import { stat } from 'fs';
 
 interface Link { 
     label: string;  
@@ -57,6 +59,23 @@ export default function Simple() {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const { colorMode, toggleColorMode } = useColorMode(); // Récupérer le mode de couleur
 
+
+    const { data: session, status } = useSession();
+    
+
+    const [avatar, setAvatar] = useState< null | string >();
+    const[connected, setConnected] = useState< boolean >(false);
+
+    useEffect(() => {
+        if(status === "authenticated"){
+            setAvatar(session.user.image);
+            setConnected(true);
+        }
+        else{
+            setAvatar(null);
+            setConnected(false);    
+        }
+    },[session, status]);
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -71,7 +90,6 @@ export default function Simple() {
                     <HStack spacing={8} alignItems={'center'}>
                         <Box>
                             <img src="image/iconshelha.jpeg" alt="" height={160} width={160} />
-
                         </Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
                             {Links.map((link) => (
@@ -89,24 +107,30 @@ export default function Simple() {
                             onClick={toggleColorMode}
                             mr={6}
                         />
-                        <Menu>
-                            <MenuButton
-                                as={Button}
-                                rounded={'full'}
-                                variant={'link'}
-                                cursor={'pointer'}
-                                minW={0}>
-                                <Avatar
-                                    size={'sm'}
-                                    src={
-                                        'https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                                    }
-                                />
-                            </MenuButton>
-                            <MenuList>
-                                <MenuItem>Login</MenuItem>
-                            </MenuList>
-                        </Menu>
+                        {connected ? (
+                            // Si l'utilisateur est connecté, affiche l'avatar et le bouton de déconnexion
+                            <Menu>
+                                <MenuButton
+                                    as={Button}
+                                    rounded={'full'}
+                                    variant={'link'}
+                                    cursor={'pointer'}
+                                    minW={0}>
+                                    <Avatar
+                                        size={'sm'}
+                                        src={avatar}
+                                    />
+                                </MenuButton>
+                                <MenuList>
+                                    <MenuItem>Profile</MenuItem>
+                                    <MenuDivider />
+                                    <MenuItem onClick={() => signOut()}>Logout</MenuItem>
+                                </MenuList>
+                            </Menu>
+                        ) : (
+                            // Si l'utilisateur n'est pas connecté, affiche le bouton de connexion
+                            <Button onClick={() => signIn('discord')}>Login</Button>
+                        )}
                     </Flex>
                 </Flex>
 
@@ -123,5 +147,5 @@ export default function Simple() {
                 ) : null}
             </Box>
         </>
-    )
+    );
 }

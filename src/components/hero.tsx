@@ -50,9 +50,7 @@ export default function CallToActionWithVideo() {
             </Text>
           </Heading>
           <Text color={'gray.500'}>
-            Snippy is a rich coding snippets app that lets you create your own code
-            snippets, categorize them, and even sync them in the cloud so you can use them
-            anywhere. All that is free!
+          Notre projet industriel, au cœur de la Mini Usine 4 de Technocampus , vise à rendre accessibles de manière sécurisée les données d'une machine via un site internet. Fusionnant les activités de Langage WEB 3, de Réseaux Industriels et de Gestion de Projet, notre approche intègre un eWon pour renforcer la sécurité. Les étapes clés comprennent une analyse d'infrastructure, la conception d'une solution répondant aux exigences, et la mise en œuvre matérielle. Notre défi consiste à développer un site internet sécurisé pour visualiser les données, avec un accent sur la sécurité des opérations. La réussite dépend de la gestion efficace des compétences techniques, de la gestion de projet et de la sécurité industrielle, présentées via un rapport et une présentation PowerPoint devant la Mini Usine, avec un examen oral mettant en avant nos apprentissages.
           </Text>
           <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
             <Button
