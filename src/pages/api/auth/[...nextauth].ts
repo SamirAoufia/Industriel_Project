@@ -1,15 +1,57 @@
-import NextAuth from 'next-auth'
+import { PrismaClient } from '@prisma/client'
+import NextAuth from 'next-auth/next'
 import DiscordProvider from 'next-auth/providers/discord'
 
-// https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes
-const scopes = ['identify'].join(' ')
+const db = new PrismaClient
 
 export default NextAuth({
   providers: [
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID,
       clientSecret: process.env.DISCORD_CLIENT_SECRET,
-      authorization: {params: {scope: scopes}},
     }),
   ],
-})
+  callbacks: {  
+    async session({session}){
+      return session
+    },
+
+   async signIn({profile}){
+      console.log(profile);
+
+      db.utilisateur.upsert({
+
+        where: {
+            discordId: profile.id,
+            nama: profile.username,
+            mail: profile.email,
+            
+        },
+        create: {
+          discordId: profile.id,
+          nama: profile.username,
+          mail: profile.email,
+          
+        },
+        update: {
+          discordId: profile.id,
+          nama: profile.username,
+          mail: profile.email,
+          
+        }
+    }).then(() => {
+        console.log("done");
+
+        
+        
+    }).catch((err) => {
+        console.error("Erreur", err)
+        
+    });
+
+    return true;
+
+
+
+    }
+  }})

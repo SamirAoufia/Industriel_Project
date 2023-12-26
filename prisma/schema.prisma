@@ -57,6 +57,7 @@ model User {
     password      String   // @db.Text
     accounts      Account[]
     sessions      Session[]
+    
     //posts         Post[]
 }
 
@@ -75,4 +76,18 @@ model tag{
     value String
     lastseen DateTime @default(now())
     enabled Boolean @default(false)
+}
+
+// Modèle Utilisateur
+model Utilisateur {
+  id            Int      @id @default(autoincrement())
+  discordId     String   @unique
+  nama          String
+  mail          String?
+  role          String   
+
+
+  // Ajoutez d'autres champs si nécessaire
+
+  @@map("utilisateurs") // Facultatif : renommez la table dans la base de données
 }

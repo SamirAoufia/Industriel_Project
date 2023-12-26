@@ -9,7 +9,7 @@ import {
   useColorModeValue,
   VisuallyHidden,
 } from '@chakra-ui/react'
-import { FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
+import { FaGithub, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import { ReactNode } from 'react'
 
 const Logo = (props: any) => {
@@ -36,6 +36,7 @@ const SocialButton = ({
     <chakra.button
     
       bg={useColorModeValue('blackAlpha.100', 'whiteAlpha.100')}
+      target='_blank'
       rounded={'full'}
       w={8}
       h={8}
@@ -75,8 +76,8 @@ export default function SmallWithLogoLeft() {
         <Text>© Projet Industriel 23/24 Groupe 1 Ali | Ayoub | Samir</Text>
         <Stack direction={'row'} spacing={6}>
             
-          <SocialButton label={'Twitter'} href={'#'}>
-            <FaTwitter />
+          <SocialButton label={'Github'} href={'https://github.com/SamirAoufia/Industriel_Project'} >
+            <FaGithub />
           </SocialButton>
           <SocialButton label={'YouTube'} href={'#'}>
             <FaYoutube />

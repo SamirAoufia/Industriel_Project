@@ -32,7 +32,7 @@ const Links: Link[] = [
     { label: 'Accueil', href: '/' },
     { label: 'Valeur', href: '/valeur' },
     { label: 'Historique', href: '/historique' },
-    { label: 'TEST', href: '/login' }
+
 ];
 
 const NavLink = (props: Props) => {

@@ -46,7 +46,7 @@ export default function CallToActionWithVideo() {
             </Text>
             <br />
             <Text as={'span'} color={'red.400'}>
-              By Ali, Ayoub et Samir!
+              Ali, Ayoub et Samir!
             </Text>
           </Heading>
           <Text color={'gray.500'}>
