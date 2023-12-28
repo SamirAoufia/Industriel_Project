@@ -31,6 +31,7 @@ export default NextAuth({
           discordId: profile.id,
           nama: profile.username,
           mail: profile.email,
+          role: "",
           
         },
         update: {

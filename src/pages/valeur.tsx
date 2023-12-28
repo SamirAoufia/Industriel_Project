@@ -1,4 +1,4 @@
-import { Box, Button, Switch, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
+import { Box, Button, Switch, Table, TableCaption, TableContainer, Tbody, Td, Tfoot, Th, Thead, Tr, background } from "@chakra-ui/react";
 import mqtt, { MqttClient } from "mqtt";
 import { useEffect, useState } from "react";
 import SmallWithLogoLeft from "~/components/footer";
@@ -112,16 +112,16 @@ export default function Home() {
     <><Simple />
       <Box as="main" minH={"calc(100vh - 8rem)"} >
 
-        <BasicStatistics />
+     
 
 
       
-
-        <Button onClick={handleClickBlue}>TEST bleu</Button>
-        <Button onClick={handleClickGreen}>TEST vert</Button>
-        <Button onClick={handleClickRed}>TEST rouge</Button>
-        <Button onClick={handleClickYellow}>TEST jaune</Button>
-
+      <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop:'50px'}}>
+        <Button onClick={handleClickBlue}style={{background:'blue',color:'white', marginRight:'10px'}}>TEST bleu</Button>
+        <Button onClick={handleClickGreen} style={{background:'green',color:'white', marginRight:'10px'}}>TEST vert</Button>
+        <Button onClick={handleClickRed}  style={{background:'red',color:'white', marginRight:'10px'}} >TEST rouge</Button>
+        <Button onClick={handleClickYellow}  style={{background:'yellow',color:'black'}}>TEST jaune</Button>
+      </div>
 
 
 
@@ -138,7 +138,6 @@ export default function Home() {
                 <Th>Topic</Th>
                 <Th>Lastseen</Th>
                 <Th isNumeric>Value</Th>
-                <Th isNumeric>Enabled</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -148,7 +147,6 @@ export default function Home() {
                   <Td>{tag.topic}</Td>
                   <Td>{tag.lastseen}</Td>
                   <Td isNumeric>{tag.value}</Td>
-                  <Td isNumeric><Switch /></Td>
                 </Tr>
               ))}
             </Tbody>

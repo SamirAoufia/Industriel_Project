@@ -15,24 +15,23 @@ import {
     useDisclosure,
     useColorModeValue,
     Stack,
-    useColorMode, // Importer useColorMode
+    useColorMode,
 } from '@chakra-ui/react';
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from '@chakra-ui/icons';
 import Link from 'next/link';
 import { type Props } from 'next/script';
 import { signIn, signOut, useSession } from 'next-auth/react';
-import { stat } from 'fs';
 
-interface Link { 
-    label: string;  
+interface Link {
+    label: string;
     href: string;
 }
 
 const Links: Link[] = [
     { label: 'Accueil', href: '/' },
     { label: 'Valeur', href: '/valeur' },
-    { label: 'Historique', href: '/historique' },
-
+    { label: 'Historique', href: '/historique' }
+    
 ];
 
 const NavLink = (props: Props) => {
@@ -48,7 +47,6 @@ const NavLink = (props: Props) => {
                 textDecoration: 'none',
                 bg: useColorModeValue('gray.200', 'gray.700'),
             }}
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             href={href}>
             {children}
         </Box>
@@ -57,25 +55,30 @@ const NavLink = (props: Props) => {
 
 export default function Simple() {
     const { isOpen, onOpen, onClose } = useDisclosure();
-    const { colorMode, toggleColorMode } = useColorMode(); // Récupérer le mode de couleur
-
-
+    const { colorMode, toggleColorMode } = useColorMode();
     const { data: session, status } = useSession();
-    
-
-    const [avatar, setAvatar] = useState< null | string >();
-    const[connected, setConnected] = useState< boolean >(false);
+    const [avatar, setAvatar] = useState<null | string>();
+    const [connected, setConnected] = useState<boolean>(false);
 
     useEffect(() => {
-        if(status === "authenticated"){
+        if (status === "authenticated") {
             setAvatar(session.user.image);
             setConnected(true);
-        }
-        else{
+        } else {
             setAvatar(null);
-            setConnected(false);    
+            setConnected(false);
         }
-    },[session, status]);
+    }, [session, status]);
+
+    // Logique conditionnelle pour déterminer les droits d'accès
+    const filteredLinks = connected
+        ? session.user.name === 'admin'
+            ? Links.filter(link => link.label === 'Accueil' || link.label === 'Valeur')
+            : session.user.name === 'bysaama'
+                ? Links.filter(link => link.label === 'Accueil' || link.label === 'Valeur' || link.label === 'Historique')
+                : Links.filter(link => link.label === 'Accueil')
+        : Links.filter(link => link.label === 'Accueil');
+
     return (
         <>
             <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
@@ -92,7 +95,7 @@ export default function Simple() {
                             <img src="image/iconshelha.jpeg" alt="" height={160} width={160} />
                         </Box>
                         <HStack as={'nav'} spacing={4} display={{ base: 'none', md: 'flex' }}>
-                            {Links.map((link) => (
+                            {filteredLinks.map((link) => (
                                 <NavLink key={link.label} href={link.href}>
                                     {link.label}
                                 </NavLink>
@@ -100,7 +103,6 @@ export default function Simple() {
                         </HStack>
                     </HStack>
                     <Flex alignItems={'center'}>
-                        {/* Bouton de bascule du mode sombre */}
                         <IconButton
                             icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                             aria-label={colorMode === 'light' ? 'Activer le mode sombre' : 'Activer le mode clair'}
@@ -108,7 +110,6 @@ export default function Simple() {
                             mr={6}
                         />
                         {connected ? (
-                            // Si l'utilisateur est connecté, affiche l'avatar et le bouton de déconnexion
                             <Menu>
                                 <MenuButton
                                     as={Button}
@@ -122,13 +123,12 @@ export default function Simple() {
                                     />
                                 </MenuButton>
                                 <MenuList>
-                                    <MenuItem>Profile</MenuItem>
+                                    <MenuItem>Bienvenue {session?.user.name}</MenuItem>
                                     <MenuDivider />
                                     <MenuItem onClick={() => signOut()}>Logout</MenuItem>
                                 </MenuList>
                             </Menu>
                         ) : (
-                            // Si l'utilisateur n'est pas connecté, affiche le bouton de connexion
                             <Button onClick={() => signIn('discord')}>Login</Button>
                         )}
                     </Flex>
@@ -137,7 +137,7 @@ export default function Simple() {
                 {isOpen ? (
                     <Box pb={4} display={{ md: 'none' }}>
                         <Stack as={'nav'} spacing={4}>
-                            {Links.map((link) => (
+                            {filteredLinks.map((link) => (
                                 <NavLink key={link.label} href={link.href}>
                                     {link.label}
                                 </NavLink>
