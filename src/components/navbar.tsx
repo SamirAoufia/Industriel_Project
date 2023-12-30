@@ -72,7 +72,7 @@ export default function Simple() {
 
     // Logique conditionnelle pour déterminer les droits d'accès
     const filteredLinks = connected
-        ? session.user.name === 'admin'
+        ? session.user.name === 'tech_samir'
             ? Links.filter(link => link.label === 'Accueil' || link.label === 'Valeur')
             : session.user.name === 'bysaama'
                 ? Links.filter(link => link.label === 'Accueil' || link.label === 'Valeur' || link.label === 'Historique')
