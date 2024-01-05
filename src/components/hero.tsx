@@ -52,26 +52,7 @@ export default function CallToActionWithVideo() {
           <Text color={'gray.500'}>
           Notre projet industriel, au cœur de la Mini Usine 4 de Technocampus , vise à rendre accessibles de manière sécurisée les données d'une machine via un site internet. Fusionnant les activités de Langage WEB 3, de Réseaux Industriels et de Gestion de Projet, notre approche intègre un eWon pour renforcer la sécurité. Les étapes clés comprennent une analyse d'infrastructure, la conception d'une solution répondant aux exigences, et la mise en œuvre matérielle. Notre défi consiste à développer un site internet sécurisé pour visualiser les données, avec un accent sur la sécurité des opérations. La réussite dépend de la gestion efficace des compétences techniques, de la gestion de projet et de la sécurité industrielle, présentées via un rapport et une présentation PowerPoint devant la Mini Usine, avec un examen oral mettant en avant nos apprentissages.
           </Text>
-          <Stack spacing={{ base: 4, sm: 6 }} direction={{ base: 'column', sm: 'row' }}>
-            <Button
-              rounded={'full'}
-              size={'lg'}
-              fontWeight={'normal'}
-              px={6}
-              colorScheme={'red'}
-              bg={'red.400'}
-              _hover={{ bg: 'red.500' }}>
-              Get started
-            </Button>
-            <Button
-              rounded={'full'}
-              size={'lg'}
-              fontWeight={'normal'}
-              px={6}
-              leftIcon={<PlayIcon h={4} w={4} color={'gray.300'} />}>
-              How It Works
-            </Button>
-          </Stack>
+          
         </Stack>
         <Flex
           flex={1}
@@ -95,26 +76,15 @@ export default function CallToActionWithVideo() {
             boxShadow={'2xl'}
             width={'full'}
             overflow={'hidden'}>
-            <IconButton
-              aria-label={'Play Button'}
-              variant={'ghost'}
-              _hover={{ bg: 'transparent' }}
-              icon={<PlayIcon w={12} h={12} />}
-              size={'lg'}
-              color={'white'}
-              position={'absolute'}
-              left={'50%'}
-              top={'50%'}
-              transform={'translateX(-50%) translateY(-50%)'}
-            />
+            
             <Image
               alt={'Hero Image'}
               fit={'cover'}
               align={'center'}
               w={'100%'}
-              h={'100%'}
+              h={'120%'}
               src={
-                'https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=800&q=80'
+                'image/technocampus.jpg'
               }
             />
           </Box>

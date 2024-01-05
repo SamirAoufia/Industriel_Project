@@ -49,7 +49,6 @@ export default function Home() {
                 <Th>Topic</Th>
                 <Th>Lastseen</Th>
                 <Th isNumeric>Value</Th>
-                <Th isNumeric>Enabled</Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -59,7 +58,6 @@ export default function Home() {
                   <Td>{tag.topic}</Td>
                   <Td>{tag.lastseen}</Td>
                   <Td isNumeric>{tag.value}</Td>
-                  <Td isNumeric><Switch /></Td>
                 </Tr>
               ))}
             </Tbody>

@@ -67,10 +67,11 @@ export default function Simple() {
         } else {
             setAvatar(null);
             setConnected(false);
+
         }
     }, [session, status]);
 
-    // Logique conditionnelle pour déterminer les droits d'accès
+
     const filteredLinks = connected
         ? session.user.name === 'tech_samir'
             ? Links.filter(link => link.label === 'Accueil' || link.label === 'Valeur')
@@ -130,6 +131,7 @@ export default function Simple() {
                             </Menu>
                         ) : (
                             <Button onClick={() => signIn('discord')}>Login</Button>
+                            
                         )}
                     </Flex>
                 </Flex>
